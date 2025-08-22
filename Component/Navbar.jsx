@@ -5,6 +5,10 @@ import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
+    const handleSignout = async () => {
+    await signOut({ redirect: false });
+    toast.success("✅ Logged out successfully!");
+  };
 
   return (
     <nav className="navbar bg-base-100 shadow-sm px-4">
@@ -73,7 +77,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <button
-                    onClick={() => signOut()}
+                    onClick={handleSignout}
                     className="btn w-full text-white"
                     style={{ backgroundColor: "#59C6D2" }}
                   >

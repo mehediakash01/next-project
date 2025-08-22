@@ -1,16 +1,19 @@
 "use client";
+
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import SocialLogin from "./SocialLogin";
+import { toast } from "react-hot-toast";
 
 export default function RegisterForm() {
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setMessage("");
 
     const form = e.target;
     const name = form.name.value;
@@ -25,12 +28,32 @@ export default function RegisterForm() {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
 
-      setMessage("✅ User registered successfully!");
+      if (!res.ok) {
+        toast.error(data.message || "Registration failed");
+        return;
+      }
+
+      toast.success("✅ Registered successfully! Logging in...");
+
+      // Auto login after registration
+      const loginRes = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (loginRes?.error) {
+        toast.error(loginRes.error);
+      } else {
+        toast.success("🎉 Login successful!");
+        router.push("/"); // redirect to home
+      }
+
       form.reset();
     } catch (err) {
-      setMessage("❌ " + err.message);
+      console.error(err);
+      toast.error("❌ Something went wrong!");
     } finally {
       setLoading(false);
     }
@@ -41,7 +64,7 @@ export default function RegisterForm() {
       onSubmit={handleSubmit}
       className="w-full max-w-lg mx-auto space-y-6 p-6 rounded-2xl shadow-lg bg-white"
     >
-      <h2 className="text-2xl font-bold text-center ">Create Account</h2>
+      <h2 className="text-2xl font-bold text-center">Create Account</h2>
 
       <label className="form-control w-full">
         <span className="label-text font-bold mb-1">Name</span>
@@ -84,14 +107,12 @@ export default function RegisterForm() {
         {loading ? "Signing Up..." : "Sign Up"}
       </button>
 
-      {message && <p className="text-center text-sm font-semibold">{message}</p>}
-
       <p className="text-center text-gray-600">Or Sign In with</p>
       <SocialLogin />
 
       <p className="text-center">
         Already have an account?{" "}
-        <Link href="/Login" className=" font-bold hover:underline">
+        <Link href="/login" className="font-bold hover:underline">
           Login
         </Link>
       </p>

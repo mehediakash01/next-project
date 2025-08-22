@@ -49,6 +49,7 @@ export default function LoginForm() {
       <button type="submit" className="w-full h-12 bg-orange-500 text-white font-bold">
         {loading ? "Signing in..." : "Sign In"}
       </button>
+       <p className="text-center text-gray-600">Or Sign In with</p>
       <SocialLogin></SocialLogin>
 
       <p className="text-center">
