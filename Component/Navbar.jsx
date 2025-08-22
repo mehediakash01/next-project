@@ -68,7 +68,7 @@ const Navbar = () => {
               <>
                 <li>
                   <Link
-                    href="/dashboard"
+                    href="/DashboardLayout"
                     className="btn w-full text-white"
                     style={{ backgroundColor: "#23BE0A" }}
                   >
@@ -129,7 +129,7 @@ const Navbar = () => {
         ) : (
           <>
             <Link
-              href="/dashboard"
+              href="/DashboardLayout"
               className="btn text-white"
               style={{ backgroundColor: "#23BE0A" }}
             >
