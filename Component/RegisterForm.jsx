@@ -91,7 +91,7 @@ export default function RegisterForm() {
 
       <p className="text-center">
         Already have an account?{" "}
-        <Link href="/login" className=" font-bold hover:underline">
+        <Link href="/Login" className=" font-bold hover:underline">
           Login
         </Link>
       </p>
