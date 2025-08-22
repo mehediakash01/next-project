@@ -1,89 +1,52 @@
 "use client";
 import React, { useState } from "react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
-import SocialLogin from "./SocialLogin";
+import { useRouter } from "next/router";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
-      const data = await res.json();
+    const res = await signIn("credentials", {
+  
+      email,
+      password,
+      callbackUrl:'/'
+    });
 
-      if (res.ok) {
-        alert(`Welcome back, ${data.user.name}!`);
-        // TODO: redirect to dashboard or home
-      } else {
-        alert(data.message);
-      }
-    } catch (err) {
-      console.error("Login error:", err);
-      alert("Something went wrong!");
-    } finally {
-      setLoading(false);
+    setLoading(false);
+
+    if (res.error) {
+      setError(res.error);
+    } else {
+      setError("");
+    routr
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg space-y-6"
-    >
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
-        Sign In
-      </h2>
-
+    <form onSubmit={handleSubmit} className="w-full max-w-lg space-y-8">
       <label className="form-control w-full">
-        <div className="label w-full">
-          <span className="label-text font-bold">Email</span>
-        </div>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          className="input input-bordered w-full"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <span className="label-text font-bold">Email</span>
+        <input type="text" name="email" className="input input-bordered w-full" />
       </label>
-
       <label className="form-control w-full">
-        <div className="label w-full">
-          <span className="label-text font-bold">Password</span>
-        </div>
-        <input
-          type="password"
-          placeholder="Enter your password"
-          className="input input-bordered w-full"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <span className="label-text font-bold">Password</span>
+        <input type="password" name="password" className="input input-bordered w-full" />
       </label>
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full h-12 bg-orange-500 text-white font-bold rounded-lg hover:bg-orange-600 transition"
-      >
-        {loading ? "Signing In..." : "Sign In"}
+      {error && <p className="text-red-500">{error}</p>}
+      <button type="submit" className="w-full h-12 bg-orange-500 text-white font-bold">
+        {loading ? "Signing in..." : "Sign In"}
       </button>
-
-      <p className="text-center text-gray-500">Or Sign In with</p>
-      <SocialLogin />
-
-      <p className="text-center text-gray-600 mt-4">
+      <p className="text-center">
         Don't have an account?{" "}
         <Link href="/register" className="text-orange-500 font-bold">
           Register
