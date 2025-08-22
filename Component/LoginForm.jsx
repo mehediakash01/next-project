@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation"; // Next.js 13+ app router
 import { toast } from "react-hot-toast";
+import SocialLogin from "./SocialLogin";
 
 export default function LoginForm() {
   const [loading, setLoading] = useState(false);
@@ -48,6 +49,7 @@ export default function LoginForm() {
       <button type="submit" className="w-full h-12 bg-orange-500 text-white font-bold">
         {loading ? "Signing in..." : "Sign In"}
       </button>
+      <SocialLogin></SocialLogin>
 
       <p className="text-center">
         Don't have an account?{" "}
