@@ -7,17 +7,15 @@ const ProductHighlights = () => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    // Fetch data from public/data/booksData.json
-    fetch("/data/booksData.json")
+    fetch("/api/books")
       .then((res) => res.json())
-      .then((data) => setBooks(data.slice(0,4)))
+      .then((data) => setBooks(data))
       .catch((err) => console.error(err));
   }, []);
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-12">
       <h2 className="text-3xl font-bold mb-8 text-center">Book Highlights</h2>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {books.map((book) => (
           <div
