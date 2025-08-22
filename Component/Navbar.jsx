@@ -37,7 +37,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/login"
+                href="/Login"
                 className="btn w-full text-white"
                 style={{ backgroundColor: "#23BE0A" }}
               >
@@ -46,7 +46,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/signup"
+                href="/register"
                 className="btn w-full text-white"
                 style={{ backgroundColor: "#59C6D2" }}
               >
@@ -77,14 +77,14 @@ const Navbar = () => {
       {/* Right / User Actions */}
       <div className="navbar-end hidden lg:flex space-x-2">
         <Link
-          href="/login"
+          href="/Login"
           className="btn text-white"
           style={{ backgroundColor: "#23BE0A" }}
         >
           Sign In
         </Link>
         <Link
-          href="/signup"
+          href="/register"
           className="btn text-white"
           style={{ backgroundColor: "#59C6D2" }}
         >
