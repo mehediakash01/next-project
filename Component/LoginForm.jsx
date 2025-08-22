@@ -35,7 +35,7 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-lg space-y-8">
+    <form onSubmit={handleSubmit} className="w-full max-w-lg space-y-8 shadow-md rounded-md p-4">
       <label className="form-control w-full">
         <span className="label-text font-bold">Email</span>
         <input type="text" name="email" className="input input-bordered w-full" />
@@ -46,7 +46,7 @@ export default function LoginForm() {
         <input type="password" name="password" className="input input-bordered w-full" />
       </label>
 
-      <button type="submit" className="w-full h-12 bg-orange-500 text-white font-bold">
+      <button type="submit" className="w-full h-12 bg-green-400 text-white font-bold">
         {loading ? "Signing in..." : "Sign In"}
       </button>
        <p className="text-center text-gray-600">Or Sign In with</p>
@@ -54,7 +54,7 @@ export default function LoginForm() {
 
       <p className="text-center">
         Don't have an account?{" "}
-        <Link href="/register" className="text-orange-500 font-bold">
+        <Link href="/register" className="font-bold">
           Register
         </Link>
       </p>
