@@ -4,7 +4,7 @@ import clientPromise from "@/lib/dbConnect";
 export async function GET() {
   try {
     const client = await clientPromise;
-    const db = client.db("bookStore"); // Replace with your DB name
+    const db = client.db("bookStore"); 
     const books = await db.collection("books").find().limit(4).toArray();
 
     return new Response(JSON.stringify(books), {
