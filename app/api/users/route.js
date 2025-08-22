@@ -3,9 +3,9 @@ import clientPromise from "@/lib/dbConnect";
 
 export async function POST(req) {
   try {
-    const body = await req.json(); // get user info from request body
+    const body = await req.json(); 
     const client = await clientPromise;
-    const db = client.db("yourDBName"); // replace with your DB name
+    const db = client.db("bookStore"); 
     const usersCollection = db.collection("users");
 
     // Insert user info

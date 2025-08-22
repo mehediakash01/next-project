@@ -1,62 +1,97 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import SocialLogin from "./SocialLogin";
-;
 
 export default function RegisterForm() {
-  const handleSubmit = async (e)=>{
-    const form = e.target;
-    const name =  form.name.value;
-    const email =  form.email.value;
-    const password =  form.password.value;
-    console.log({name,email,password});
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
-  }
- 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+
+      setMessage("✅ User registered successfully!");
+      form.reset();
+    } catch (err) {
+      setMessage("❌ " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-lg space-y-8">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full max-w-lg mx-auto space-y-6 p-6 rounded-2xl shadow-lg bg-white"
+    >
+      <h2 className="text-2xl font-bold text-center ">Create Account</h2>
+
       <label className="form-control w-full">
-        <div className="label w-full">
-          <span className="label-text  font-bold">Name</span>
-        </div>
+        <span className="label-text font-bold mb-1">Name</span>
         <input
           type="text"
-          placeholder="Type here"
-          className="input input-bordered w-full"
           name="name"
-        />
-      </label>
-      <label className="form-control w-full">
-        <div className="label w-full">
-          <span className="label-text  font-bold">Email</span>
-        </div>
-        <input
-          type="text"
-          name="email"
-          placeholder="Type here"
+          placeholder="Enter your name"
           className="input input-bordered w-full"
+          required
         />
       </label>
+
       <label className="form-control w-full">
-        <div className="label w-full">
-          <span className="label-text font-bold">Password</span>
-        </div>
+        <span className="label-text font-bold mb-1">Email</span>
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter your email"
+          className="input input-bordered w-full"
+          required
+        />
+      </label>
+
+      <label className="form-control w-full">
+        <span className="label-text font-bold mb-1">Password</span>
         <input
           type="password"
           name="password"
-          placeholder="Type here"
+          placeholder="Enter your password"
           className="input input-bordered w-full"
+          required
         />
       </label>
-      <button className="w-full h-12 bg-orange-500 text-white font-bold">
-        Sign Up
+
+      <button
+        type="submit"
+        className="w-full h-12 bg-[#23BE0A] hover:bg-[#23BE0A70] text-white font-bold rounded-lg transition"
+        disabled={loading}
+      >
+        {loading ? "Signing Up..." : "Sign Up"}
       </button>
-      <p className="text-center">Or Sign In with</p>
+
+      {message && <p className="text-center text-sm font-semibold">{message}</p>}
+
+      <p className="text-center text-gray-600">Or Sign In with</p>
       <SocialLogin />
+
       <p className="text-center">
-        Don't Have an account?{" "}
-        <Link href="/Login" className="text-orange-500 font-bold">
+        Already have an account?{" "}
+        <Link href="/login" className=" font-bold hover:underline">
           Login
         </Link>
       </p>
