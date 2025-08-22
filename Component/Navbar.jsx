@@ -1,8 +1,11 @@
 "use client"; 
 import React from "react";
 import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
 
 const Navbar = () => {
+  const { data: session, status } = useSession();
+
   return (
     <nav className="navbar bg-base-100 shadow-sm px-4">
       {/* Left / Brand */}
@@ -35,24 +38,50 @@ const Navbar = () => {
             <li>
               <Link href="/about">About</Link>
             </li>
-            <li>
-              <Link
-                href="/Login"
-                className="btn w-full text-white"
-                style={{ backgroundColor: "#23BE0A" }}
-              >
-                Sign In
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/register"
-                className="btn w-full text-white"
-                style={{ backgroundColor: "#59C6D2" }}
-              >
-                Sign Up
-              </Link>
-            </li>
+
+            {!session ? (
+              <>
+                <li>
+                  <Link
+                    href="/Login"
+                    className="btn w-full text-white"
+                    style={{ backgroundColor: "#23BE0A" }}
+                  >
+                    Sign In
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/register"
+                    className="btn w-full text-white"
+                    style={{ backgroundColor: "#59C6D2" }}
+                  >
+                    Sign Up
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link
+                    href="/dashboard"
+                    className="btn w-full text-white"
+                    style={{ backgroundColor: "#23BE0A" }}
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <button
+                    onClick={() => signOut()}
+                    className="btn w-full text-white"
+                    style={{ backgroundColor: "#59C6D2" }}
+                  >
+                    Logout
+                  </button>
+                </li>
+              </>
+            )}
           </ul>
         </div>
 
@@ -66,7 +95,7 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <Link href="/product">Products</Link>
+            <Link href="/products">Products</Link>
           </li>
           <li>
             <Link href="/about">About</Link>
@@ -76,20 +105,41 @@ const Navbar = () => {
 
       {/* Right / User Actions */}
       <div className="navbar-end hidden lg:flex space-x-2">
-        <Link
-          href="/Login"
-          className="btn text-white"
-          style={{ backgroundColor: "#23BE0A" }}
-        >
-          Sign In
-        </Link>
-        <Link
-          href="/register"
-          className="btn text-white"
-          style={{ backgroundColor: "#59C6D2" }}
-        >
-          Sign Up
-        </Link>
+        {!session ? (
+          <>
+            <Link
+              href="/Login"
+              className="btn text-white"
+              style={{ backgroundColor: "#23BE0A" }}
+            >
+              Sign In
+            </Link>
+            <Link
+              href="/register"
+              className="btn text-white"
+              style={{ backgroundColor: "#59C6D2" }}
+            >
+              Sign Up
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link
+              href="/dashboard"
+              className="btn text-white"
+              style={{ backgroundColor: "#23BE0A" }}
+            >
+              Dashboard
+            </Link>
+            <button
+              onClick={() => signOut()}
+              className="btn text-white"
+              style={{ backgroundColor: "#59C6D2" }}
+            >
+              Logout
+            </button>
+          </>
+        )}
       </div>
     </nav>
   );
