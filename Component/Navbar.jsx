@@ -40,7 +40,7 @@ const Navbar = () => {
               <Link href="/products">Products</Link>
             </li>
             <li>
-              <Link href="/about">About</Link>
+              <Link href="/About">About</Link>
             </li>
 
             {!session ? (
@@ -102,7 +102,7 @@ const Navbar = () => {
             <Link href="/product">Products</Link>
           </li>
           <li>
-            <Link href="/about">About</Link>
+            <Link href="/About">About</Link>
           </li>
         </ul>
       </div>
