@@ -13,8 +13,8 @@ const ProductsPage = async () => {
       <h1 className="text-3xl font-bold mb-8 text-center">All Books</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {books.map((book) => (
-          <div key={book.bookId} className="border rounded-lg shadow hover:shadow-lg transform hover:scale-105 transition-all p-4 flex flex-col">
+        {books.map((book,indx) => (
+          <div key={indx} className="border rounded-lg shadow hover:shadow-lg transform hover:scale-105 transition-all p-4 flex flex-col">
             <img
               src={book.image}
               alt={book.bookName}
