@@ -15,7 +15,7 @@ const ProductDetails = async ({ params }) => {
   const book = await db.collection("books").findOne({ bookId: parseInt(id) });
 
   if (!book) {
-    return <div className="text-center py-20">Book not found.</div>;
+    return <div className="text-center py-20">Book is missing. select another one</div>;
   }
 
   // ✅ useCart hook
