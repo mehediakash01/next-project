@@ -1,8 +1,9 @@
-"use client";
+
 import React from "react";
 import dbConnect from "@/lib/dbConnect";
 import { ObjectId } from "mongodb";
-import useCart from "@/app/hooks/useCart";
+import { AddToCart } from "@/Component/AddToCart";
+
 
 
 const ProductDetails = async ({ params }) => {
@@ -18,8 +19,7 @@ const ProductDetails = async ({ params }) => {
     return <div className="text-center py-20">Book is missing. select another one</div>;
   }
 
-  // ✅ useCart hook
-  const { addItem } = useCart();
+
 
   return (
     <div className="max-w-5xl mx-auto py-12 px-4 flex flex-col md:flex-row gap-8">
@@ -41,13 +41,7 @@ const ProductDetails = async ({ params }) => {
 
         <div className="flex gap-4">
           {/* ✅ Add to Cart Button */}
-          <button
-            className="btn text-white"
-            style={{ backgroundColor: "#23BE0A" }}
-            onClick={() => addItem(book)}
-          >
-            Add to Cart
-          </button>
+        <AddToCart book={book}></AddToCart>
 
           <button
             className="btn text-white"
