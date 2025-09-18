@@ -55,9 +55,10 @@ export default function AboutPage() {
       <section className="py-16 px-6 max-w-6xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-12">Our Story</h2>
         <div className="flex flex-col md:flex-row items-center gap-8">
-          <img
+          <Image
             src="https://i.ibb.co.com/0cv102J/To-Kill-a-Mockingbird.webp"
             alt="Bookstore Team"
+            
            className="h-48 w-full object-cover rounded mb-4"
           />
           
